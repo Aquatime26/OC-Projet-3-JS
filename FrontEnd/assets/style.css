@@ -204,12 +204,6 @@ li:hover {
 	margin-bottom: 1.5em;
 }
 
-#introduction article:hover p {
-	text-decoration: underline;
-	text-decoration-color: skyblue;
-	text-decoration-thickness: 4px;
-}
-
 #portfolio {
 	margin-left: 70px;
 }
@@ -228,7 +222,7 @@ li:hover {
 	align-items: center;
 	width: 585px;
 	height: 38px;
-	gap: 50px;
+	gap: 10px;
 	margin: 60px 0 60px 235px;
 	padding: 0;
 }
@@ -236,10 +230,10 @@ li:hover {
 .filter-button {
 	background-color: #FFFEF8;
 	border: 1px solid #1D6154;
+	color: #1D6154;
 	border-radius: 60px;
 	display: inline-block;
 	white-space: nowrap;
-	color: #1D6154;
 	font-family: Syne;
 	font-weight: 700;
 	font-size: 16px;
@@ -251,6 +245,20 @@ li:hover {
 	background-color: #1D6154;
 	color: #FFFEF8;
 	transition: 0.3s;
+}
+
+.filter-button-selected {
+	background-color: #1D6154;
+	color:#FFFEF8;
+	border: 1px solid #1D6154;
+	border-radius: 60px;
+	display: inline-block;
+	white-space: nowrap;
+	font-family: Syne;
+	font-weight: 700;
+	font-size: 16px;
+	padding: 10px 18px;
+	cursor: pointer;
 }
 
 .gallery {
