@@ -108,7 +108,11 @@ a:visited {
 	text-decoration: none;
 }
 
-li.login-page {
+.login-page {
+	height: fit-content;
+}
+
+li.login-icon {
 	font-weight: bold;
 }
 
@@ -274,6 +278,13 @@ li:hover {
 	width: 100%;
 
 }
+
+.hidden {
+	display: none;
+}
+
+
+
 #contact {
 	width: 50%;
 margin: auto;
@@ -320,14 +331,13 @@ input[type="submit"]{
 
 footer {
 	background-color: white;
-	/* position: sticky;
-	bottom: 0;
-	width: 1140px; */
+	position: sticky;
+	width: 1140px;
 }
 
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	padding: 2em
 }
 

@@ -35,7 +35,8 @@ function createFilterButtons(categories) {
     const allButton = document.createElement('button');
     allButton.textContent = "Tous";
     allButton.dataset.id = "0";
-    allButton.classList.add('filter-button');
+    allButton.classList.add('filter-button'); // Classe pour le bouton "Tous"
+    allButton.classList.add('filter-button-selected'); // Classe pour le bouton "Tous"
     container.appendChild(allButton);
 
     // Création des boutons de filtre dynamiquement à partir des catégories
@@ -51,8 +52,7 @@ function createFilterButtons(categories) {
     const buttons = document.querySelectorAll('.filter-button');
     buttons.forEach((button) => {
         button.addEventListener('click', () => {
-            const Id = button.dataset.id;
-            imageFilter(Id);
+            imageFilter(button.dataset.id);
             buttons.forEach((btn) => btn.classList.remove('filter-button-selected')); // Retire la classe de sélection
             button.classList.add('filter-button-selected'); // Ajoute la classe de sélection au bouton cliqué
         });
@@ -61,12 +61,18 @@ function createFilterButtons(categories) {
 
 // Fonction pour filtrer les images en fonction de la catégorie sélectionnée
 function imageFilter(categoryId) {
-    if (categoryId === "0") {
-        displayPictures(images); // Affiche tout
-    } else {
-        const filteredImages = images.filter(img => img.categoryId.toString() === categoryId);
-        displayPictures(filteredImages);
-    }
+    const allImages = document.querySelectorAll('#gallery figure'); // Sélection de toutes les images
+
+    allImages.forEach((img) => {
+        console.log(img);
+        if (categoryId === "0") {
+            img.classList.remove("hidden"); // Affiche toutes les images
+        } else if (img.dataset.categoryId === categoryId) {
+            img.classList.remove("hidden"); // Affiche les images de la catégorie sélectionnée
+        } else {
+            img.classList.add("hidden"); // Cache les images qui ne correspondent pas à la catégorie sélectionnée
+        }
+    })
 }
 
 // Fonction pour récupérer les catégories depuis l'API
