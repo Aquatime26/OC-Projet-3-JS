@@ -47,10 +47,21 @@ table {
 	border-spacing: 0;
 }
 /** end reset css**/
+
+html {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 body {
-	max-width: 1140px;
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
 	margin: auto;
-	font-family: 'Work Sans' ;
+	font-family: 'Work Sans';
 	font-size: 14px;
 	background-color: #FFFEF8;
 }
@@ -61,6 +72,11 @@ header {
 	margin-top: 50px;
 	margin-bottom: 100px;
 }
+
+main {
+	flex: 1;
+}
+
 section {
 	margin: 50px 0
 }
@@ -283,8 +299,6 @@ li:hover {
 	display: none;
 }
 
-
-
 #contact {
 	width: 50%;
 margin: auto;
@@ -302,6 +316,10 @@ margin: auto;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
+}
+
+section form button:hover {
+	cursor: pointer;
 }
 
 #contact input {
@@ -331,13 +349,14 @@ input[type="submit"]{
 
 footer {
 	background-color: white;
-	position: sticky;
-	width: 1140px;
+	width: 100%;
+	padding-right: 500px;
+	margin-top: auto;
 }
 
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	padding: 2em
+	padding: 2em;
 }
 
