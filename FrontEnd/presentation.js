@@ -102,11 +102,7 @@ async function loadImages() {
         images = await response.json(); // Récupération des images
         displayPictures(images); // Affichage des images
 
-        // Récupération des catégories et création des boutons
-        const categories = await fetchCategories();
-        if (categories) {
-            createFilterButtons(categories); // Création des boutons de filtre
-        }
+        
     } catch (error) {
         console.error('Une erreur est survenue :', error);
     }
@@ -114,47 +110,20 @@ async function loadImages() {
 
 loadImages(); // Appel de la fonction pour charger les images
 
+async function checkConnected() {
+    const token = sessionStorage.getItem('token'); // Récupération du token depuis le sessionStorage
 
-//Fonction pour gérer la soumission du formulaire de connexion
-function logIn() {
-    const loginForm = document.querySelector('.login-form'); // Sélection du formulaire de connexion
-
-    loginForm.addEventListener('submit', async function(event) {
-        event.preventDefault();
-
-        const emailInput = document.querySelector('#mail');
-        const passwordInput = document.querySelector('#password');
-
-        const email = emailInput.value;
-        const password = passwordInput.value;
-
-        try {
-            const response = await fetch("http://localhost:5678/api/users/login", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ 'email': email, 'password': password })
-            });
-
-            if (response.ok) {
-                const data = await response.json(); 
-                console.log(data); // Affichage des données de réponse
-                sessionStorage.setItem('userId', data.userId); // Stockage de l'ID utilisateur dans le sessionStorage
-                sessionStorage.setItem('token', data.token); // Stockage du token dans le sessionStorage
-                window.location.href = 'index.html'; // Redirection vers la page d'accueil
-            } else {
-                const errorData = await response.json(); // Récupération des données d'erreur
-                console.log(errorData);
-                throw new Error(errorData.message || 'Erreur de connexion');
-            }
-        } catch (error) {
-            alert(error.message  || 'Une erreur est survenue lors de la connexion.'); // Affichage d'une alerte en cas d'erreur
-            emailInput.value = '';
-            passwordInput.value = '';
+    if (token) {
+        const editionBar = document.getElementById('edition-mode');
+        editionBar.classList.remove('hidden'); // Affiche la barre d'édition si l'utilisateur est connecté
+    }
+    else {
+        // Récupération des catégories et création des boutons
+        const categories = await fetchCategories();
+        if (categories) {
+            createFilterButtons(categories); // Création des boutons de filtre
         }
-    });
+    }
 }
 
-logIn(); // Appel de la fonction pour gérer la soumission du formulaire de connexion
-
+checkConnected(); // Appel de la fonction pour vérifier si l'utilisateur est connecté
