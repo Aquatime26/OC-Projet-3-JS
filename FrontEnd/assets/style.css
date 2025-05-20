@@ -58,6 +58,7 @@ html {
 
 body {
 	display: flex;
+	width: 100%;
 	flex-direction: column;
 	min-height: 100%;
 	margin: auto;
@@ -88,9 +89,10 @@ body {
 
 header {
 	display: flex;
-	justify-content: space-between;
+	width: 100%;
+	justify-content: space-evenly;
 	margin-top: 50px;
-	margin-bottom: 100px;
+	margin-bottom: 50px;
 }
 
 main {
@@ -98,7 +100,8 @@ main {
 }
 
 section {
-	margin: 50px 0
+	margin-top: 50px;
+	margin-bottom: 100px;
 }
 
 h1{
@@ -148,10 +151,6 @@ a:visited {
 	height: fit-content;
 }
 
-li.login-icon {
-	font-weight: bold;
-}
-
 #login {
 	display: flex;
 	align-items: center;
@@ -183,23 +182,23 @@ li.login-icon {
 }
 
 .login-form button {
-	width: 150px;
-	height: 35px;
+	width: 179px;
+	height: 36px;
 	font-family: 'Syne';
 	font-weight: 700;
+	font-size: 14px;
 	color: white;
 	background-color: #1D6154;
-	margin : 2em auto ;
-	text-align: center;
-	border-radius: 60px ;
+	margin: 30px 120px 0 120px;
+	border-radius: 60px;
 }
 
-.login-form p {
+.fpassword {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	text-decoration: underline;
-	font-family: Work Sans;
+	font-family: 'Work Sans';
 	font-weight: 500;
 	font-size: 14px;
 }
@@ -212,20 +211,19 @@ nav li img {
 li:hover {
 	color: #B1663C;
 }
+
 #introduction {
-	width: 1000px;
-	margin-top: 150px;
-	margin-bottom: 150px;
-	margin-left: 70px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	gap: 70px;
 }
+
 #introduction figure {
 	width: 474px;
 	height: 355px;
 }
+
 #introduction img {
 	display: block;
 	margin: auto;
@@ -236,6 +234,7 @@ li:hover {
 #introduction article {
 	width: 404px
 }
+
 #introduction h2 {
 	margin-bottom: 1em;
 }
@@ -245,14 +244,94 @@ li:hover {
 }
 
 #portfolio {
-	margin-left: 70px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.portfolio-header {
+	display: flex;
+	flex-direction: row; 
+	align-items: center; 
+	justify-content: space-between;
+	width: 300px;
+	margin-left: 95px;
 }
 
 #portfolio h2 {
-	width: 1000px;
-	margin-left: 12px;
+	width: 200px;
+	height: 36px;
 	text-align: center;
-	margin-bottom: 1em;
+	justify-content: center;
+}
+
+#edit-project {
+	width: 84px;
+	height: 18px;
+	background-color: #FFFEF8;
+}
+
+#edit-project img {
+	filter: brightness(0%) saturate(100%) invert(0%);
+}
+
+#modal-button {
+	background-color: #FFFEF8;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.modal-window {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 630px;
+  height: 638px;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.modal-window h2 {
+  margin: 20px 0 20px 0;
+  font-family: 'Work Sans';
+  font-weight: 400;
+  font-size: 26px;
+  color: black;
+  text-align: center;
+  justify-content: center;
+}
+
+.pictures-button {
+	width: 237px;
+	height: 36px;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+  	border: 1px solid #1D6154;
+  	border-radius: 60px;
+  	cursor: pointer;
+  	padding: 0;
 }
 
 .filter-container {
@@ -263,7 +342,7 @@ li:hover {
 	width: 585px;
 	height: 38px;
 	gap: 10px;
-	margin: 60px 0 60px 235px;
+	margin: 60px 0 60px 0;
 	padding: 0;
 }
 
@@ -302,17 +381,24 @@ li:hover {
 }
 
 .gallery {
-	width: 1000px;
-	margin-left: 23px;
+	width: 100%;
+	max-width: 960px;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
-	grid-column-gap: 0;
-	grid-row-gap: 20px;
+	gap: 20px;
+}
+
+.gallery figure {
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
 }
 
 .gallery img {
 	width: 100%;
-
+	justify-content: center;
+	align-items: center;
 }
 
 .hidden {
@@ -320,8 +406,8 @@ li:hover {
 }
 
 #contact {
-	width: 50%;
-margin: auto;
+	width: 390px;
+	margin: auto;
 
 }
 #contact > * {
@@ -342,12 +428,13 @@ section form button:hover {
 	cursor: pointer;
 }
 
-#contact input {
-	height: 50px;
+#contact input{
+	height: 51px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 #contact label {
 	margin: 2em 0 1em 0;
 }
@@ -357,6 +444,7 @@ section form button:hover {
 }
 
 input[type="submit"]{
+	height: 36px;
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -376,7 +464,14 @@ footer {
 
 footer nav ul {
 	display: flex;
+	width: 90%;
 	justify-content: flex-end;
 	padding: 2em 0 2em 0;
 }
 
+footer nav li {
+	height: 16px;
+	font-family: 'work sans';
+	font-size: 14px;
+	line-height: 100%;
+}

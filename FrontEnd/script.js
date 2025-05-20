@@ -102,6 +102,12 @@ async function loadImages() {
         images = await response.json(); // Récupération des images
         displayPictures(images); // Affichage des images
 
+        // Gestion des erreurs 401 et 404
+        if (response.status === 401) {
+            throw new Error("Erreur 401 : Accès non autorisé.");
+        } else if (response.status === 404) {
+            throw new Error("Erreur 404 : Ressource non trouvée.");
+        }
         
     } catch (error) {
         console.error('Une erreur est survenue :', error);
@@ -110,15 +116,23 @@ async function loadImages() {
 
 loadImages(); // Appel de la fonction pour charger les images
 
+// Fonction pour vérifier si l'utilisateur est connecté
 async function checkConnected() {
     const token = sessionStorage.getItem('token'); // Récupération du token depuis le sessionStorage
+    const logButton = document.getElementById('log-button'); // Sélection du bouton de connexion
 
     if (token) {
-        const editionBar = document.getElementById('edition-mode');
+        const editionBar = document.getElementById('edition-bar'); // Sélection de la barre d'édition
         editionBar.classList.remove('hidden'); // Affiche la barre d'édition si l'utilisateur est connecté
+
+        const editProject = document.getElementById('edit-project'); // Sélection du bouton "Modifier les projets"
+        editProject.classList.remove('hidden'); // Affiche le bouton "Modifier les projets"
+
+        logButton.textContent = "Logout"; // Change le texte du bouton de connexion
     }
     else {
         // Récupération des catégories et création des boutons
+        logButton.textContent = "Login";
         const categories = await fetchCategories();
         if (categories) {
             createFilterButtons(categories); // Création des boutons de filtre
@@ -126,4 +140,49 @@ async function checkConnected() {
     }
 }
 
-checkConnected(); // Appel de la fonction pour vérifier si l'utilisateur est connecté
+// Fonction pour gérer la déconnexion de l'utilisateur
+function logOut() {
+    const logItem = document.getElementById('log-button');
+    const token = sessionStorage.getItem('token');
+
+    if (token) {
+        logItem.textContent = "Logout"; // Change le texte du bouton de connexion
+        logItem.href = '#'; // Empêche la redirection vers la page de connexion
+
+        logItem.addEventListener("click", (event) => {
+            event.preventDefault();
+            const confirmed = window.confirm("Êtes-vous sûr de vouloir vous déconnecter ?");
+            if (confirmed) {
+                sessionStorage.removeItem('token'); // Suppression du token
+                window.location.href = 'index.html'; // Redirection vers la page d'accueil
+            }
+        });
+    } else {
+        logItem.textContent = "Login"; // Change le texte du bouton de connexion
+        logItem.href = 'login.html'; // Redirection vers la page de connexion
+    }
+}
+
+// Fonction pour ouvrir une fenêtre modale
+function initializeModal() {
+    const modalButton = document.getElementById('modal-button'); // Sélection du bouton d'ouverture de la modale
+    const modal = document.getElementById('modal'); // Sélection de la fenêtre modale
+
+    modalButton.addEventListener('click', () => {
+        modal.classList.remove('hidden'); // Affiche la modale
+    });
+
+    modal.addEventListener('click', (e) => {
+        const modalWindow = document.querySelector('.modal-window')
+        if (!modalWindow.contains(e.target)) {
+            modal.classList.add('hidden'); // Cache la modale si on clique en dehors
+        }
+    });
+}
+
+const test=checkConnected().then(() => {
+    logOut();
+    initializeModal(); 
+}); 
+
+console.log(test);

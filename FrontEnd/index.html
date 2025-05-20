@@ -7,13 +7,15 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/2eb5946d0a.js" crossorigin="anonymous"></script>
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
-	<section class="edition-mode hidden" id="edition-mode">
+	<section class="edition-mode hidden" id="edition-bar">
         <p>
-            <img src="./assets/icons/Vector.png" alt="Icône de crayon" class="icon">
+			<!-- <i class="fa-regular fa-pen-to-square"></i> -->
+            <img src="./assets/icons/Vector.png" alt="Icône de crayon" class="icon">	
             <h3>Mode édition</h3>
         </p>
 	</section>
@@ -23,7 +25,7 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li><a href="login.html">login</a></li>
+			<li><a href="login.html" id="log-button">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -41,7 +43,22 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class ="portfolio-header">
+			<h2>Mes Projets</h2>
+			<div class="edition-mode hidden" id="edit-project"><img src="./assets/icons/Vector.png" alt="Icône de crayon" class="icon">
+				<button id="modal-button">modifier</button>
+			</div>
+				<div id="modal" class="modal hidden">
+					<div class="modal-window">
+    					<span id="closerModal" class="closer-modal"></span>
+   	 					<h2>Galerie Photo</h2>
+						<div>
+							<figure></figure>
+						</div>						
+						<button id="addPictures" class="pictures-button">Ajouter une photo</button>"
+  					</div>
+				</div>
+			</div>
 		<ul class ="filter-container">
 			<!-- boutons filtres ajouté -->
 			<!--Retrait des boutons et ajout de l'icône à la place lors de la connexion-->
@@ -71,6 +88,6 @@
 		</ul>
 	</nav>
 </footer>
-<script src="presentation.js" defer></script>
+<script src="script.js" defer></script>
 </body>
 </html>

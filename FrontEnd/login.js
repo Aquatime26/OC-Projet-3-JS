@@ -36,6 +36,11 @@
                 }
             }
         catch (error) {
-            console.log('tutu');
+            console.log('Une erreur est survenue, Mot de passe ou email incorrect', (error)); // Affichage de l'erreur dans la console
+            const inputMail = document.querySelector('#mail');
+            const inputPassword = document.querySelector('#password');
+
+            inputMail.value = ""; // Réinitialisation du champ email
+            inputPassword.value = ""; // Réinitialisation du champ mot de passe
         }  
     });
