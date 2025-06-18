@@ -54,7 +54,7 @@ html {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
+} 
 
 body {
 	display: flex;
@@ -76,6 +76,20 @@ body {
 	height: 59px;
 	background-color: black;
 	gap: 10px;
+}
+
+#edition-bar .fa-pen-to-square {
+	color: white;
+	font-size: 16px;
+	align-items: center;
+	justify-content: center;
+}
+
+#edit-project .icon-edit-project {
+	color: black;
+	font-size: 16px;
+	align-items: center;
+	justify-content: center;
 }
 
 .edition-mode h3 {
@@ -258,7 +272,7 @@ li:hover {
 	align-items: center; 
 	justify-content: space-between;
 	width: 300px;
-	margin-left: 95px;
+	margin-left: 90px;
 }
 
 #portfolio h2 {
@@ -302,13 +316,12 @@ li:hover {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
-  width: 630px;
-  height: 638px;
+  width: 590px;
+  height: 648px;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   align-items: center;
-  text-align: center;
-  justify-content: center;
+  position: relative;
 }
 
 .modal-window h2 {
@@ -319,6 +332,73 @@ li:hover {
   color: black;
   text-align: center;
   justify-content: center;
+}
+
+.closer-modal {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  height: 24px;
+  color: black;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.return-modal {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  height: 24px;
+  color: black;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.modal-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 425px;
+  padding-top: 25px;
+  padding-bottom: 55px;
+  border-bottom: solid 1px #B3B3B3;
+}
+
+.modal-gallery figure {
+  position: relative;
+  width: 77px;
+  height: 102px;
+  margin: 0 0 20px 0;
+}
+
+.modal-image {
+	width: 77px;
+	height: 102px;
+}
+
+.trash-figure {
+	width: 17px;
+	height: 17px;
+	background-color: black;
+	position: absolute;
+	left: 55px;
+	bottom: 80px;
+	cursor: pointer;
+	z-index: 2;
+}
+
+.fa-trash-can {
+	color: white;
+	font-size: 11px;
+	position: absolute;
+	top: 3px;
+	left: 3.5px;
 }
 
 .pictures-button {
@@ -332,6 +412,109 @@ li:hover {
   	border-radius: 60px;
   	cursor: pointer;
   	padding: 0;
+	margin: 35px 0 25px 0;
+}
+
+.add-pictures-modal {
+  	background-color: white;
+  	padding: 20px;
+ 	border-radius: 8px;
+  	width: 630px;
+  	height: 670px;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	position: relative;
+  	box-sizing: border-box;
+}
+
+.add-pictures-header {
+	width: 420px;
+	height: 169px;
+	margin-bottom: 40px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #E8F1F6;
+}
+
+#addPicturesButton {
+	width: 173px;
+	height: 36px;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: #306685;
+	background-color: #CBD6DC;
+  	border: 1px solid #CBD6DC;
+  	border-radius: 50px;
+  	cursor: pointer;
+  	padding: 0;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.imgCaracs {
+	width: 94px;
+	height: 12px;
+	font-family: 'Work Sans';
+	font-weight: 400;
+	font-size: 10px;
+	color: #444444;
+}
+
+#addPicturesForm{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: stretch;
+	border-bottom: solid 1px #B3B3B3;
+}
+
+#addPicturesForm label {
+	width: 32px;
+	height: 16px;
+	margin-bottom: 10px;
+	display: block;
+	text-align: left;
+	font-family: 'Work Sans';
+	font-weight: 500;
+	font-size: 14px;
+}
+
+#addPicturesForm input {
+	margin-bottom: 40px;
+}
+
+.validationPicturesButton {
+	Margin-top: 30px;
+	width: 237px;
+	height: 36px;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #A7A7A7;
+  	border: 1px solid #A7A7A7;
+  	border-radius: 60px;
+  	padding: 0;
+}
+
+.add-pictures-modal h2 {
+  margin: 20px 0 20px 0;
+  font-family: 'Work Sans';
+  font-weight: 800;
+  font-weight: 800;
+  font-size: 26px;
+  color: black;
+  text-align: center;
+  justify-content: center;
+}
+
+.add-pictures-modal input {
+	width: 420px;
+	height: 51px;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border: none;
 }
 
 .filter-container {

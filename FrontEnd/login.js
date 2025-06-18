@@ -23,7 +23,6 @@
             if (response.status === 401 || response.status === 404) {
                 const errorMessage=document.querySelector('#error-message');
                  errorMessage.classList.remove('hidden'); // Affichage d'un message d'erreur
-                 console.log('tonton'); // Affichage de l'erreur dans la console
          }
             if (response.ok) {
                 const data = await response.json(); 

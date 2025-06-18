@@ -1,4 +1,11 @@
-let images = []; // Déclaration du tableau vide pour stocker les images
+ // Déclaration du tableau vide pour stocker les images
+let images = [];
+
+// Déclaration d'un objet pour stocker les données de l'API
+const apiData = {
+    categories: [],
+    works: []
+};
 
 // Fonction qui affiche les images dans la div "gallery"
 function displayPictures(images) {
@@ -24,6 +31,41 @@ function displayPictures(images) {
         figure.appendChild(img); 
         figure.appendChild(figcaption); 
         container.appendChild(figure); 
+    });
+}
+
+// Fonction pour afficher les images dans la modale
+async function displayPicturesModal(images) {
+    const modalGallery = document.getElementById('galleryModal'); // Sélection de la galerie dans la modale
+
+     // Parcours des images et création des éléments img et figure pour chaque URL
+        images.forEach((image) => {
+        let figure = document.createElement('figure');
+        figure.setAttribute('data-id', image.id); // Assurez-vous que chaque figure a un attribut data-id correspondant à l'ID de l'image
+        figure.style.position = 'relative';
+
+        let img = document.createElement('img'); // Création de l'élément img
+        img.src = image.imageUrl;     
+        img.alt = image.title;
+        img.classList.add('modal-image'); // Ajout d'une classe pour le style
+
+        let trashFigure = document.createElement('div');
+        trashFigure.classList.add('trash-figure');
+        trashFigure.dataset.id = image.id; // Assurez-vous que chaque figure a un attribut data-id correspondant à l'ID de l'image
+        let trashIcon = document.createElement('i');
+        trashIcon.classList.add('fa-solid', 'fa-trash-can');
+        trashIcon.dataset.id = image.id; // Assurez-vous que chaque icône a un attribut data-id correspondant à l'ID de l'image
+        
+        figure.appendChild(img); 
+        modalGallery.appendChild(figure); 
+        figure.appendChild(trashFigure);
+        trashFigure.appendChild(trashIcon);
+
+         trashFigure.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const workId = parseInt(trashFigure.dataset.id);
+            await deleteWork(workId);
+        });
     });
 }
 
@@ -64,7 +106,6 @@ function imageFilter(categoryId) {
     const allImages = document.querySelectorAll('#gallery figure'); // Sélection de toutes les images
 
     allImages.forEach((img) => {
-        console.log(img);
         if (categoryId === "0") {
             img.classList.remove("hidden"); // Affiche toutes les images
         } else if (img.dataset.categoryId === categoryId) {
@@ -84,7 +125,9 @@ async function fetchCategories() {
                 'Content-Type': 'application/json',
             }
         });
-        return await response.json(); // Retourne les catégories récupérées
+        const data = await response.json(); // Retourne les catégories récupérées
+        apiData.categories = data; // Stocke les catégories dans l'objet apiData
+        return data; // Retourne les catégories pour utilisation ultérieure
     } catch (error) {
         console.error('Erreur lors du chargement des catégories :', error);
     }
@@ -99,8 +142,10 @@ async function loadImages() {
                 'Content-Type': 'application/json',
             }
         }); 
-        images = await response.json(); // Récupération des images
-        displayPictures(images); // Affichage des images
+        const data = await response.json(); // Récupération des images
+        apiData.works = data; // Stockage des images dans l'objet apiData
+        displayPictures(data); // Affichage des images
+        displayPicturesModal(data); // Affichage des images dans la modale
 
         // Gestion des erreurs 401 et 404
         if (response.status === 401) {
@@ -116,32 +161,49 @@ async function loadImages() {
 
 loadImages(); // Appel de la fonction pour charger les images
 
-// Fonction pour vérifier si l'utilisateur est connecté
-async function checkConnected() {
-    const token = sessionStorage.getItem('token'); // Récupération du token depuis le sessionStorage
-    const logButton = document.getElementById('log-button'); // Sélection du bouton de connexion
+function displayEditInterface(editionBar, editProject) {
+     // Cacher la Div des boutons de filtre
+        const filterContainer = document.querySelector('.filter-container');
+        filterContainer.style.display = 'none';
 
-    if (token) {
-        const editionBar = document.getElementById('edition-bar'); // Sélection de la barre d'édition
-        editionBar.classList.remove('hidden'); // Affiche la barre d'édition si l'utilisateur est connecté
+		// Afficher les éléments si connecté
+        const logButton = document.getElementById('log-button');
+		editionBar.classList.remove('hidden');
+		editProject.classList.remove('hidden');
+		logButton.textContent = "Logout";
 
-        const editProject = document.getElementById('edit-project'); // Sélection du bouton "Modifier les projets"
-        editProject.classList.remove('hidden'); // Affiche le bouton "Modifier les projets"
+        editProject.classList.add('edition-mode');
+        editProject.id = 'edit-project';
+        editProject.innerHTML = `
+            <i class="fa-regular fa-pen-to-square" icon-edit-project></i>
+			<button id="modal-button">modifier</button>
+            `;
 
-        logButton.textContent = "Logout"; // Change le texte du bouton de connexion
-    }
-    else {
-        // Récupération des catégories et création des boutons
-        logButton.textContent = "Login";
-        const categories = await fetchCategories();
-        if (categories) {
-            createFilterButtons(categories); // Création des boutons de filtre
-        }
+        const portfolioHeader = document.querySelector('.portfolio-header');
+        portfolioHeader.style.marginBottom = '70px';
+        portfolioHeader.appendChild(editProject);
+
+}
+
+// Fonction pour vérifier si l'utilisateur est connecté et afficher le mode edition en haut
+function connectedMode() {
+	const token = sessionStorage.getItem('token');
+	const editionBar = document.getElementById('edition-bar');
+	const editProject = document.getElementById('edit-project');
+
+	// Masquer par défaut
+	editionBar.classList.add('hidden');
+	editProject.classList.add('hidden');
+
+	if (token) {
+        displayEditInterface(editionBar, editProject); // Afficher l'interface Modale et la faire disparaître
     }
 }
 
-// Fonction pour gérer la déconnexion de l'utilisateur
-function logOut() {
+connectedMode();
+
+// Fonction pour gérer la déconnexion
+function disconnectionManager() {
     const logItem = document.getElementById('log-button');
     const token = sessionStorage.getItem('token');
 
@@ -151,11 +213,8 @@ function logOut() {
 
         logItem.addEventListener("click", (event) => {
             event.preventDefault();
-            const confirmed = window.confirm("Êtes-vous sûr de vouloir vous déconnecter ?");
-            if (confirmed) {
-                sessionStorage.removeItem('token'); // Suppression du token
-                window.location.href = 'index.html'; // Redirection vers la page d'accueil
-            }
+            sessionStorage.removeItem('token'); // Suppression du token
+            window.location.href = 'index.html'; // Redirection vers la page d'accueil
         });
     } else {
         logItem.textContent = "Login"; // Change le texte du bouton de connexion
@@ -163,26 +222,4 @@ function logOut() {
     }
 }
 
-// Fonction pour ouvrir une fenêtre modale
-function initializeModal() {
-    const modalButton = document.getElementById('modal-button'); // Sélection du bouton d'ouverture de la modale
-    const modal = document.getElementById('modal'); // Sélection de la fenêtre modale
-
-    modalButton.addEventListener('click', () => {
-        modal.classList.remove('hidden'); // Affiche la modale
-    });
-
-    modal.addEventListener('click', (e) => {
-        const modalWindow = document.querySelector('.modal-window')
-        if (!modalWindow.contains(e.target)) {
-            modal.classList.add('hidden'); // Cache la modale si on clique en dehors
-        }
-    });
-}
-
-const test=checkConnected().then(() => {
-    logOut();
-    initializeModal(); 
-}); 
-
-console.log(test);
+disconnectionManager(); // Appel de la fonction pour gérer la déconnexion
