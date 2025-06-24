@@ -37,6 +37,7 @@ function displayPictures(images) {
 // Fonction pour afficher les images dans la modale
 async function displayPicturesModal(images) {
     const modalGallery = document.getElementById('galleryModal'); // Sélection de la galerie dans la modale
+    modalGallery.innerHTML = ''; // Réinitialisation du contenu de la galerie modale
 
      // Parcours des images et création des éléments img et figure pour chaque URL
         images.forEach((image) => {
