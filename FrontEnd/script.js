@@ -7,6 +7,23 @@ const apiData = {
     works: []
 };
 
+// Fonction pour récupérer les catégories depuis l'API
+async function fetchCategories() {
+    try {
+        const response = await fetch("http://localhost:5678/api/categories", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        const data = await response.json(); // Retourne les catégories récupérées
+        apiData.categories = data; // Stocke les catégories dans l'objet apiData
+        return data; // Retourne les catégories pour utilisation ultérieure
+    } catch (error) {
+        console.error('Erreur lors du chargement des catégories :', error);
+    }
+}
+
 // Fonction qui affiche les images dans la div "gallery"
 function displayPictures(images) {
     const container = document.querySelector('#gallery'); 
@@ -96,8 +113,8 @@ function createFilterButtons(categories) {
     buttons.forEach((button) => {
         button.addEventListener('click', () => {
             imageFilter(button.dataset.id);
-            buttons.forEach((btn) => btn.classList.remove('filter-button-selected')); // Retire la classe de sélection
-            button.classList.add('filter-button-selected'); // Ajoute la classe de sélection au bouton cliqué
+            buttons.forEach(btn => btn.classList.remove('filter-button-selected')); // Retire la classe de sélection de tous les boutons
+            button.classList.add('filter-button-selected'); // Ajoute la classe de sélection au bouton
         });
     });
 }
@@ -116,51 +133,6 @@ function imageFilter(categoryId) {
         }
     })
 }
-
-// Fonction pour récupérer les catégories depuis l'API
-async function fetchCategories() {
-    try {
-        const response = await fetch("http://localhost:5678/api/categories", {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-        const data = await response.json(); // Retourne les catégories récupérées
-        apiData.categories = data; // Stocke les catégories dans l'objet apiData
-        return data; // Retourne les catégories pour utilisation ultérieure
-    } catch (error) {
-        console.error('Erreur lors du chargement des catégories :', error);
-    }
-}
-
-// Fonction pour charger les images depuis l'API
-async function loadImages() {
-    try {
-        const response = await fetch("http://localhost:5678/api/works", {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }); 
-        const data = await response.json(); // Récupération des images
-        apiData.works = data; // Stockage des images dans l'objet apiData
-        displayPictures(data); // Affichage des images
-        displayPicturesModal(data); // Affichage des images dans la modale
-
-        // Gestion des erreurs 401 et 404
-        if (response.status === 401) {
-            throw new Error("Erreur 401 : Accès non autorisé.");
-        } else if (response.status === 404) {
-            throw new Error("Erreur 404 : Ressource non trouvée.");
-        }
-        
-    } catch (error) {
-        console.error('Une erreur est survenue :', error);
-    }
-}
-
-loadImages(); // Appel de la fonction pour charger les images
 
 function displayEditInterface(editionBar, editProject) {
      // Cacher la Div des boutons de filtre
